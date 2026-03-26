@@ -1,40 +1,50 @@
 name: upload artifacts
+
 on:
-    push:
-    workflow_dispatch:
+  push:
+  workflow_dispatch:
+
 env:
-    emp_name: shinoj
+  emp_name: shinoj
+
 jobs:
-           
-    upload_artifact:
-        runs-on: ubuntu-latest
-        steps:
-        - name: checkout repository
-          uses: actions/checkout@v6
-        - name: install cowsay
-          run: |
-            sudo apt update
-            sudo  apt install -y cowsay
-        - name: create dragon
-          run: cowsay -f dragon "DevOps rocks" > dragon.txt
-        - name: greets
-          run: echo "welcome to devops ${{env.emp_name}}"
-        - name: upload dragon file
-          uses: actions/upload-artifact@v4
-          with:
-            name: dragon
-            path: dragon.txt
+  upload_artifact:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    download_artifact:
-        needs: upload_artifact
-        runs-on: ubuntu-latest
-        steps:
-         - name: download dragon file
-           uses: actions/download-artifact@v8
-           with:
-            name: dragon file
-            path: dragon.txt
-         - name: list the files
-           run: ls -ltr
+      - name: Install cowsay
+        run: |
+          sudo apt update
+          sudo apt install -y cowsay
 
+      - name: Create dragon
+        run: cowsay -f dragon "DevOps rocks" > dragon.txt
+
+      - name: Greets
+        run: echo "Welcome to DevOps ${{ env.emp_name }}"
+
+      - name: Upload dragon file
+        uses: actions/upload-artifact@v4
+        with:
+          name: dragon
+          path: dragon.txt
+
+  download_artifact:
+    needs: upload_artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download dragon file
+        uses: actions/download-artifact@v4
+        with:
+          name: dragon
+          path: .
+
+      - name: List the files
+        run: ls -ltr
+
+      - name: Show file content
+        run: cat dragon.txt
