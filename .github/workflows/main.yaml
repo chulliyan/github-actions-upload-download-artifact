@@ -24,3 +24,17 @@ jobs:
           with:
             name: dragon
             path: dragon.txt
+
+
+    download_artifact:
+        needs: upload_artifact
+        runs-on: ububtu-latest
+        steps:
+         - name: download dragon file
+           uses: actions/download-artifact@v8
+           with:
+            name: dragon file
+            path: dragon.txt
+         - name: list the files
+           run: ls -ltr
+
