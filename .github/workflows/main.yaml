@@ -16,6 +16,11 @@ jobs:
             sudo apt update
             sudo  apt install -y cowsay
         - name: create dragon
-          run: cowsay -f dragon "DevOps rocks"
+          run: cowsay -f dragon "DevOps rocks" > dragon.txt
         - name: greets
           run: echo "welcome to devops ${{env.emp_name}}"
+        - name: upload dragon file
+          uses: actions/upload-artifact@v4
+          with:
+            name: dragon
+            path: dragon.txt
