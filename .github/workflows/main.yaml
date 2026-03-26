@@ -28,7 +28,7 @@ jobs:
 
     download_artifact:
         needs: upload_artifact
-        runs-on: ububtu-latest
+        runs-on: ubuntu-latest
         steps:
          - name: download dragon file
            uses: actions/download-artifact@v8
