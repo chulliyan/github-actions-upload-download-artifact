@@ -1,0 +1,21 @@
+name: upload artifacts
+on:
+    push:
+    workflow_dispatch:
+jobs:
+    env:
+        emp_name: shinoj
+        
+    upload_artifact:
+        runs-on: ubuntu-latest
+        steps:
+        - name: checkout repository
+          uses: actions/checkout@v6
+        - name: install cowsay
+          run: |
+            sudo apt update
+            sudo  apt install -y cowsay
+        - name: create dragon
+          run: cowsay -f dragon "DevOps rocks"
+        - name: greets
+         run: echo "welcome to devops ${{env.emp_name}}"
